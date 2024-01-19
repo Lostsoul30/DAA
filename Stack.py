@@ -1,35 +1,40 @@
 class StackArray:
-    def __init__(self):
-        self.items = []
+    def __init__(self, size):
+        self.size = size
+        self.stack = [None] * size
+        self.top = -1
 
     def is_empty(self):
-        return len(self.items) == 0
+        return self.top == -1
+
+    def is_full(self):
+        return self.top == self.size - 1
 
     def push(self, item):
-        self.items.append(item)
+        if self.is_full():
+            print("Stack Overflow")
+            return
+        self.top += 1
+        self.stack[self.top] = item
 
     def pop(self):
-        if not self.is_empty():
-            return self.items.pop()
-        else:
-            print("Stack is empty")
+        if self.is_empty():
+            print("Stack Underflow")
+            return None
+        item = self.stack[self.top]
+        self.top -= 1
+        return item
 
     def peek(self):
-        if not self.is_empty():
-            return self.items[-1]
-        else:
-            print("Stack is empty")
+        if self.is_empty():
+            return None
+        return self.stack[self.top]
 
-    def size(self):
-        return len(self.items)
-
-# Example Usage:
-stack_array = StackArray()
+# Example usage:
+stack_array = StackArray(5)
 stack_array.push(1)
 stack_array.push(2)
 stack_array.push(3)
-
-print("Stack using Array:", stack_array.items)
-print("Pop item from Stack:", stack_array.pop())
-print("Peek at the top of Stack:", stack_array.peek())
-print("Stack size:", stack_array.size())
+print("Top element:", stack_array.peek())
+print("Popped element:", stack_array.pop())
+print("Top element after pop:", stack_array.peek())
